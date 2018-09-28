@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "663105266204",
+    "firebase_url": "https://wallpaperappdata.firebaseio.com",
+    "project_id": "wallpaperappdata",
+    "storage_bucket": "wallpaperappdata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663105266204:android:4d9a31124931a1ec",
+        "android_client_info": {
+          "package_name": "beau.com.wall.wallpaperapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663105266204-0ssukn8q1f9gaeltqf375t8t4dpthkcl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "beau.com.wall.wallpaperapp",
+            "certificate_hash": "0abcc14aa3c301a73768424e09311dc4691c0d0c"
+          }
+        },
+        {
+          "client_id": "663105266204-dahfac8rbi8rkcnilhrmssi853fictnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt2eRIJma_D-ElViWwEs6m6tyGaQErqCI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663105266204-dahfac8rbi8rkcnilhrmssi853fictnj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
