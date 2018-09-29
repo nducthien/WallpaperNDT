@@ -4,3 +4,5 @@
 - Create homeActivity layout
 - Custom toolbar arrow
 - Create Tablayout with ViewPaper
+-----------------------------------
++ Used RoomDB and Rxjava to save Recents Background
