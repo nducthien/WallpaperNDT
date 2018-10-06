@@ -1,5 +1,6 @@
 package beau.com.wall.wallpaperapp.Database.LocalDatabase;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -10,6 +11,7 @@ import java.util.List;
 import beau.com.wall.wallpaperapp.Database.Recents;
 import io.reactivex.Flowable;
 
+@Dao
 public interface RecentsDAO {
 
     @Query("SELECT * FROM recents ORDER BY saveTime DESC LIMIT 10")

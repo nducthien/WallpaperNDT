@@ -11,11 +11,11 @@ public class RecentsDataSource implements IRecentsDataSource {
     private RecentsDAO recentsDAO;
     private static RecentsDataSource instance;
 
-    public RecentsDataSource(RecentsDAO recentsDAO) {
+    private RecentsDataSource(RecentsDAO recentsDAO) {
         this.recentsDAO = recentsDAO;
     }
 
-    public RecentsDataSource getInstance(RecentsDAO recentsDAO){
+    public static RecentsDataSource getInstance(RecentsDAO recentsDAO){
         if (instance == null)
             instance = new RecentsDataSource(recentsDAO);
         return instance;
@@ -23,7 +23,7 @@ public class RecentsDataSource implements IRecentsDataSource {
 
     @Override
     public Flowable<List<Recents>> getAllRecents() {
-        return null;
+        return recentsDAO.getAllRecents();
     }
 
     @Override

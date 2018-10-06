@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,8 +29,21 @@ import java.io.IOException;
 import java.util.UUID;
 
 import beau.com.wall.wallpaperapp.Common.Common;
+import beau.com.wall.wallpaperapp.Database.DataSource.RecentRepository;
+import beau.com.wall.wallpaperapp.Database.LocalDatabase.LocalDatabase;
+import beau.com.wall.wallpaperapp.Database.LocalDatabase.RecentsDataSource;
+import beau.com.wall.wallpaperapp.Database.Recents;
 import beau.com.wall.wallpaperapp.Helper.SaveImageHelper;
 import dmax.dialog.SpotsDialog;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class ViewWallpaper extends AppCompatActivity {
 
@@ -38,13 +52,17 @@ public class ViewWallpaper extends AppCompatActivity {
     CoordinatorLayout rootLayout;
     public ImageView imageView;
 
+    // Room Database
+    CompositeDisposable compositeDisposable;
+    RecentRepository recentRepository;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case Common.PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     AlertDialog alertDialog = new SpotsDialog(ViewWallpaper.this);
                     alertDialog.show();
                     alertDialog.setMessage("Please watting....");
@@ -100,6 +118,12 @@ public class ViewWallpaper extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // init Room Database
+        compositeDisposable = new CompositeDisposable();
+        LocalDatabase database = LocalDatabase.getInstance(this);
+        recentRepository = RecentRepository.getInstance(RecentsDataSource.getInstance(database.recentsDAO()));
+
+
         //init
         rootLayout = findViewById(R.id.rootLayout);
         collapsingToolbarLayout = findViewById(R.id.collapsing);
@@ -112,6 +136,10 @@ public class ViewWallpaper extends AppCompatActivity {
         Picasso.with(this)
                 .load(Common.select_background.getImageLink())
                 .into(imageView);
+
+        // add to recents
+        addToRecents();
+
         fab_wallpaper = findViewById(R.id.fab_wallpaper);
         fab_wallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,9 +177,45 @@ public class ViewWallpaper extends AppCompatActivity {
         });
     }
 
+    private void addToRecents() {
+        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+            // Ctr I
+
+
+            @Override
+            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                Recents recents = new Recents(Common.select_background.getImageLink(),
+                        Common.select_background.getCategoryId(),
+                        String.valueOf(System.currentTimeMillis()));
+                recentRepository.insertRecents(recents);
+                emitter.onComplete();
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("ERROR", throwable.getMessage());
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
     @Override
     protected void onDestroy() {
         Picasso.with(this).cancelRequest(target);
+        compositeDisposable.clear();
         super.onDestroy();
     }
 

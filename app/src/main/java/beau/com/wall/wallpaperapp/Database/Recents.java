@@ -3,7 +3,7 @@ package beau.com.wall.wallpaperapp.Database;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 
-import io.reactivex.annotations.NonNull;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "recents", primaryKeys = {"imageLink","categoryId"})
 public class Recents {
