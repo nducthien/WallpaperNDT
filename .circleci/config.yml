@@ -31,4 +31,4 @@ workflows:
           filters:
             branch:
               only:
-                - [master,develop]
+                - master
