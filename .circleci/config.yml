@@ -29,4 +29,6 @@ workflows:
     jobs:
       - publish:
           filters:
-            branch: [master, develop]
+            branch:
+              only:
+                - [master,develop]
