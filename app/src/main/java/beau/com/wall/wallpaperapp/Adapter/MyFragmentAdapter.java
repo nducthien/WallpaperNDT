@@ -37,6 +37,8 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
         return 3;
     }
 
+    // Ctr + O
+
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

@@ -115,6 +115,11 @@ public class CategoryFragment extends Fragment {
 
     }
 
+    /**
+     * Because each time user select tab , we show fragment so we will use Singleton Design Pattern
+     * to make sure only one instance of fragment is create
+     * @return
+     */
     public static CategoryFragment getIntance() {
         if (INSTANCE == null)
             INSTANCE = new CategoryFragment();
