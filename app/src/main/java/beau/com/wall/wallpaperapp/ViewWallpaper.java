@@ -190,7 +190,7 @@ public class ViewWallpaper extends AppCompatActivity {
 
     private void increaseViewCount() {
         FirebaseDatabase.getInstance()
-                .getReference(Common.STR_CATEGORY_BACKGROUND)
+                .getReference(Common.STR_WALLPAPER)
                 .child(Common.select_background_key)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -204,7 +204,7 @@ public class ViewWallpaper extends AppCompatActivity {
                             update_view.put("viewCount", count);
 
                             FirebaseDatabase.getInstance()
-                                    .getReference(Common.STR_CATEGORY_BACKGROUND)
+                                    .getReference(Common.STR_WALLPAPER)
                                     .child(Common.select_background_key)
                                     .updateChildren(update_view)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -225,7 +225,7 @@ public class ViewWallpaper extends AppCompatActivity {
                             update_view.put("viewCount", Long.valueOf(1));
 
                             FirebaseDatabase.getInstance()
-                                    .getReference(Common.STR_CATEGORY_BACKGROUND)
+                                    .getReference(Common.STR_WALLPAPER)
                                     .child(Common.select_background_key)
                                     .updateChildren(update_view)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
