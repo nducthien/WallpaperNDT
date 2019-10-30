@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import beau.com.wall.wallpaperapp.Fragment.CategoryFragment;
-import beau.com.wall.wallpaperapp.Fragment.DailyPopularFragment;
+import beau.com.wall.wallpaperapp.Fragment.TrendingFragment;
 import beau.com.wall.wallpaperapp.Fragment.RecentsFragment;
 
 public class MyFragmentAdapter extends FragmentPagerAdapter {
@@ -25,7 +25,7 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
         if (position == 0)
             return CategoryFragment.getIntance();
         else if (position == 1)
-            return DailyPopularFragment.getInstance();
+            return TrendingFragment.getInstance();
         else if (position == 2)
             return RecentsFragment.getInstance(context);
         else
@@ -46,7 +46,7 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Category";
             case 1:
-                return "Daiy Popular";
+                return "Trending";
             case 2:
                 return "Recents";
         }
