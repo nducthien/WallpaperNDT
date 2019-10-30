@@ -49,6 +49,12 @@ dependencies {
 
     implementation 'com.facebook.stetho:stetho-okhttp:1.5.1'
 
+    // Facebook
+    implementation 'com.facebook.android:facebook-share:4.31.0'
+
+    // New FloatingActionButton
+    implementation 'com.github.clans:fab:1.6.4'
+
 
 }
 
