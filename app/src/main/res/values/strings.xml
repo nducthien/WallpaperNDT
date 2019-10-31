@@ -10,5 +10,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="in_news">how to fix faill</string>
+    <string name="in_news">You never walk alone</string>
+
+    <string name="facebook_app_id">2370008553327318</string>
+    <string name="facebook_login_protocol_scheme">fb2370008553327318</string>
 </resources>
