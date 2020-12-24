@@ -1,6 +1,6 @@
-package beau.com.wall.wallpaperapp.Common;
+package beau.com.wall.wallpaperapp.common;
 
-import beau.com.wall.wallpaperapp.Model.WallpaperItem;
+import beau.com.wall.wallpaperapp.model.WallpaperItem;
 
 public class Common {
     public static final String STR_CATEGORY_BACKGROUND = "CategoryBackground";

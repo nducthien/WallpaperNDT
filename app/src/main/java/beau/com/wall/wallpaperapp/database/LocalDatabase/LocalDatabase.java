@@ -1,13 +1,13 @@
-package beau.com.wall.wallpaperapp.Database.LocalDatabase;
+package beau.com.wall.wallpaperapp.database.LocalDatabase;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import beau.com.wall.wallpaperapp.Database.Recents;
+import beau.com.wall.wallpaperapp.database.Recents;
 
-import static beau.com.wall.wallpaperapp.Database.LocalDatabase.LocalDatabase.DATABASE_VERSION;
+import static beau.com.wall.wallpaperapp.database.LocalDatabase.LocalDatabase.DATABASE_VERSION;
 
 
 @Database(entities = Recents.class, version = DATABASE_VERSION)

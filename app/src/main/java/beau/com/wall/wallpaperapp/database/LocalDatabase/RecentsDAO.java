@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Database.LocalDatabase;
+package beau.com.wall.wallpaperapp.database.LocalDatabase;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import beau.com.wall.wallpaperapp.Database.Recents;
+import beau.com.wall.wallpaperapp.database.Recents;
 import io.reactivex.Flowable;
 
 @Dao

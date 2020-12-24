@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Adapter;
+package beau.com.wall.wallpaperapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import beau.com.wall.wallpaperapp.Fragment.CategoryFragment;
-import beau.com.wall.wallpaperapp.Fragment.TrendingFragment;
-import beau.com.wall.wallpaperapp.Fragment.RecentsFragment;
+import beau.com.wall.wallpaperapp.fragment.CategoryFragment;
+import beau.com.wall.wallpaperapp.fragment.TrendingFragment;
+import beau.com.wall.wallpaperapp.fragment.RecentsFragment;
 
 public class MyFragmentAdapter extends FragmentPagerAdapter {
 

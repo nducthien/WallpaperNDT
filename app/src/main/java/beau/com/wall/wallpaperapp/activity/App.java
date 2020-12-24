@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp;
+package beau.com.wall.wallpaperapp.activity;
 
 import android.app.Application;
 

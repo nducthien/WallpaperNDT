@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp;
+package beau.com.wall.wallpaperapp.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -44,13 +44,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import beau.com.wall.wallpaperapp.Common.Common;
-import beau.com.wall.wallpaperapp.Database.DataSource.RecentRepository;
-import beau.com.wall.wallpaperapp.Database.LocalDatabase.LocalDatabase;
-import beau.com.wall.wallpaperapp.Database.LocalDatabase.RecentsDataSource;
-import beau.com.wall.wallpaperapp.Database.Recents;
-import beau.com.wall.wallpaperapp.Helper.SaveImageHelper;
-import beau.com.wall.wallpaperapp.Model.WallpaperItem;
+import beau.com.wall.wallpaperapp.common.Common;
+import beau.com.wall.wallpaperapp.database.DataSource.RecentRepository;
+import beau.com.wall.wallpaperapp.database.LocalDatabase.LocalDatabase;
+import beau.com.wall.wallpaperapp.database.LocalDatabase.RecentsDataSource;
+import beau.com.wall.wallpaperapp.database.Recents;
+import beau.com.wall.wallpaperapp.helper.SaveImageHelper;
+import beau.com.wall.wallpaperapp.model.WallpaperItem;
+import beau.com.wall.wallpaperapp.R;
 import dmax.dialog.SpotsDialog;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -64,9 +65,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ViewWallpaper extends AppCompatActivity {
 
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton fab_wallpaper, fab_Dowload;
-    CoordinatorLayout rootLayout;
+    private FloatingActionButton fab_wallpaper;
+    private FloatingActionButton fab_download;
+    private CoordinatorLayout rootLayout;
     public ImageView imageView;
 
     // Room Database
@@ -108,7 +109,7 @@ public class ViewWallpaper extends AppCompatActivity {
     }
 
 
-    private Target target = new Target() {
+    private final Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
@@ -132,7 +133,7 @@ public class ViewWallpaper extends AppCompatActivity {
         }
     };
 
-    private Target facebookConvertBitmap = new Target() {
+    private final Target facebookConvertBitmap = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             SharePhoto sharePhoto = new SharePhoto.Builder()
@@ -180,7 +181,7 @@ public class ViewWallpaper extends AppCompatActivity {
 
         //init
         rootLayout = findViewById(R.id.rootLayout);
-        collapsingToolbarLayout = findViewById(R.id.collapsing);
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsingAppBar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
 
@@ -223,7 +224,7 @@ public class ViewWallpaper extends AppCompatActivity {
             }
         });
 
-        // add to recents
+        // add to recent
         addToRecents();
 
         fab_wallpaper = findViewById(R.id.fab_wallpaper);
@@ -236,19 +237,19 @@ public class ViewWallpaper extends AppCompatActivity {
             }
         });
 
-        fab_Dowload = findViewById(R.id.fab_dowload);
-        fab_Dowload.setOnClickListener(new View.OnClickListener() {
+        fab_download = findViewById(R.id.fab_dowload);
+        fab_download.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                // don't forget request runtime permission to dowload img
+                // don't forget request runtime permission to download img
                 if (ActivityCompat.checkSelfPermission(ViewWallpaper.this,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Common.PERMISSION_REQUEST_CODE);
                 } else {
                     AlertDialog alertDialog = new SpotsDialog(ViewWallpaper.this);
                     alertDialog.show();
-                    alertDialog.setMessage("Please watting....");
+                    alertDialog.setMessage("Please waiting....");
 
                     String fileName = UUID.randomUUID().toString() + ".png";
                     Picasso.with(getBaseContext())
@@ -257,7 +258,7 @@ public class ViewWallpaper extends AppCompatActivity {
                                     alertDialog,
                                     getApplicationContext().getContentResolver(),
                                     fileName,
-                                    "NDT Wallpaper Image"));
+                                    "Wallpaper Image"));
                 }
             }
         });
@@ -331,8 +332,6 @@ public class ViewWallpaper extends AppCompatActivity {
     private void addToRecents() {
         Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
             // Ctr I
-
-
             @Override
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
                 Recents recents = new Recents(Common.select_background.getImageLink(),

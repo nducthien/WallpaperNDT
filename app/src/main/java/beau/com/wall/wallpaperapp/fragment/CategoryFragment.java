@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Fragment;
+package beau.com.wall.wallpaperapp.fragment;
 
 
 import android.content.Intent;
@@ -21,10 +21,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import beau.com.wall.wallpaperapp.Common.Common;
+import beau.com.wall.wallpaperapp.common.Common;
 import beau.com.wall.wallpaperapp.Interface.ItemClickListener;
-import beau.com.wall.wallpaperapp.ListWallpaper;
-import beau.com.wall.wallpaperapp.Model.CategoryItem;
+import beau.com.wall.wallpaperapp.activity.ListWallpaper;
+import beau.com.wall.wallpaperapp.model.CategoryItem;
 import beau.com.wall.wallpaperapp.R;
 import beau.com.wall.wallpaperapp.ViewHolder.CategoryViewHolder;
 
@@ -108,7 +108,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.layout_category_item, parent, false);
+                        .inflate(R.layout.item_category, parent, false);
                 return new CategoryViewHolder(itemView);
             }
         };

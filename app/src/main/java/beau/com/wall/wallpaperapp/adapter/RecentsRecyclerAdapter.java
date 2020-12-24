@@ -1,5 +1,6 @@
-package beau.com.wall.wallpaperapp.Adapter;
+package beau.com.wall.wallpaperapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +15,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import beau.com.wall.wallpaperapp.Common.Common;
-import beau.com.wall.wallpaperapp.Database.Recents;
+import beau.com.wall.wallpaperapp.common.Common;
+import beau.com.wall.wallpaperapp.database.Recents;
 import beau.com.wall.wallpaperapp.Interface.ItemClickListener;
-import beau.com.wall.wallpaperapp.ListWallpaper;
-import beau.com.wall.wallpaperapp.Model.WallpaperItem;
+import beau.com.wall.wallpaperapp.model.WallpaperItem;
 import beau.com.wall.wallpaperapp.R;
 import beau.com.wall.wallpaperapp.ViewHolder.ListWallpaperViewHolder;
-import beau.com.wall.wallpaperapp.ViewWallpaper;
+import beau.com.wall.wallpaperapp.activity.ViewWallpaper;
 
 public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperViewHolder>{
 
@@ -36,14 +36,14 @@ public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperVi
     @Override
     public ListWallpaperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_wallpaper_item, parent, false);
+                .inflate(R.layout.item_wallpaper, parent, false);
         int height = parent.getMeasuredHeight()/2;
         itemView.setMinimumHeight(height);
         return new ListWallpaperViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ListWallpaperViewHolder holder, final int position) {
+    public void onBindViewHolder(final ListWallpaperViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         Picasso.with(context)
                 .load(recents.get(position).getImageLink())
                 .networkPolicy(NetworkPolicy.OFFLINE)

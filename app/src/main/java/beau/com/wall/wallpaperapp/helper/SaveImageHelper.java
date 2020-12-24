@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Helper;
+package beau.com.wall.wallpaperapp.helper;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -27,8 +27,6 @@ public class SaveImageHelper implements Target {
         this.name = name;
         this.desc = desc;
     }
-
-
 
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

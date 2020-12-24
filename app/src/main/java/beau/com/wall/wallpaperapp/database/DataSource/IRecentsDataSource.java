@@ -1,8 +1,8 @@
-package beau.com.wall.wallpaperapp.Database.DataSource;
+package beau.com.wall.wallpaperapp.database.DataSource;
 
 import java.util.List;
 
-import beau.com.wall.wallpaperapp.Database.Recents;
+import beau.com.wall.wallpaperapp.database.Recents;
 import io.reactivex.Flowable;
 
 public interface IRecentsDataSource {

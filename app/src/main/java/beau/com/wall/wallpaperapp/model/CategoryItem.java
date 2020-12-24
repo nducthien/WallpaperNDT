@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Model;
+package beau.com.wall.wallpaperapp.model;
 
 public class CategoryItem {
     public String name;

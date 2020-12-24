@@ -1,4 +1,4 @@
-package beau.com.wall.wallpaperapp.Fragment;
+package beau.com.wall.wallpaperapp.fragment;
 
 
 import android.annotation.SuppressLint;
@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import beau.com.wall.wallpaperapp.Adapter.RecentsRecyclerAdapter;
-import beau.com.wall.wallpaperapp.Database.DataSource.RecentRepository;
-import beau.com.wall.wallpaperapp.Database.LocalDatabase.LocalDatabase;
-import beau.com.wall.wallpaperapp.Database.LocalDatabase.RecentsDataSource;
-import beau.com.wall.wallpaperapp.Database.Recents;
+import beau.com.wall.wallpaperapp.adapter.RecentsRecyclerAdapter;
+import beau.com.wall.wallpaperapp.database.DataSource.RecentRepository;
+import beau.com.wall.wallpaperapp.database.LocalDatabase.LocalDatabase;
+import beau.com.wall.wallpaperapp.database.LocalDatabase.RecentsDataSource;
+import beau.com.wall.wallpaperapp.database.Recents;
 import beau.com.wall.wallpaperapp.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -69,7 +69,7 @@ public class RecentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recents, container, false);
-        rcv_recents = view.findViewById(R.id.rcv_recents);
+        rcv_recents = view.findViewById(R.id.rcv_recent);
         rcv_recents.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         rcv_recents.setLayoutManager(gridLayoutManager);

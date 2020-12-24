@@ -14,4 +14,5 @@
 
     <string name="facebook_app_id">2370008553327318</string>
     <string name="facebook_login_protocol_scheme">fb2370008553327318</string>
+    <string name="category_name">Category Name</string>
 </resources>

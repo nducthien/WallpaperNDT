@@ -1,9 +1,11 @@
-package beau.com.wall.wallpaperapp;
+package beau.com.wall.wallpaperapp.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import beau.com.wall.wallpaperapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
