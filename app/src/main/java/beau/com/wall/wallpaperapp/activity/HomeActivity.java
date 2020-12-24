@@ -2,9 +2,13 @@ package beau.com.wall.wallpaperapp.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -16,7 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 
 import beau.com.wall.wallpaperapp.adapter.MyFragmentAdapter;
 import beau.com.wall.wallpaperapp.common.Common;
@@ -27,6 +36,8 @@ public class HomeActivity extends AppCompatActivity
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    DrawerLayout drawer;
+    NavigationView navigationView;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -36,8 +47,39 @@ public class HomeActivity extends AppCompatActivity
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "You need accpept this permission to dowload image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "You need accept this permission to download image", Toast.LENGTH_SHORT).show();
                 }
+            }
+            break;
+        }
+    }
+
+    // Override method onActivityResult by Ctr + O
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Common.PERMISSION_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Snackbar.make(drawer, new StringBuilder("Welcome")
+                        .append(FirebaseAuth.getInstance().getCurrentUser().getEmail()), Snackbar.LENGTH_LONG)
+                        .show();
+
+                if (ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Common.PERMISSION_REQUEST_CODE);
+                }
+
+
+                viewPager = findViewById(R.id.viewpager);
+                MyFragmentAdapter myFragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), this);
+                viewPager.setAdapter(myFragmentAdapter);
+
+                tabLayout = findViewById(R.id.tabLayout);
+                tabLayout.setupWithViewPager(viewPager);
+
+                loadUserInformation();
             }
         }
     }
@@ -51,7 +93,26 @@ public class HomeActivity extends AppCompatActivity
         toolbar.setTitle("Wallpaper");
         setSupportActionBar(toolbar);
 
-        // don't forget request runtime permission to dowload img
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // check if not sign-in then navigate sign-in page
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),
+                    Common.SIGN_IN_REQUEST_CODE);
+        } else {
+            Snackbar.make(drawer, new StringBuilder("Welcome")
+                    .append(FirebaseAuth.getInstance().getCurrentUser().getEmail()), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+
+        // don't forget request runtime permission to download img
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Common.PERMISSION_REQUEST_CODE);
@@ -65,14 +126,15 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        loadUserInformation();
+    }
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    private void loadUserInformation() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView tvEmail = headerLayout.findViewById(R.id.tvEmail);
+            tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        }
     }
 
     @Override
@@ -113,18 +175,8 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_view_uploads) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

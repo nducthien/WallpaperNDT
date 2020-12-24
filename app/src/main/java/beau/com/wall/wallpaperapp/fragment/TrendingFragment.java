@@ -59,7 +59,7 @@ public class TrendingFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<WallpaperItem, ListWallpaperViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final ListWallpaperViewHolder holder, int position, @NonNull final WallpaperItem model) {
-                Picasso.with(getActivity())
+                Picasso.get()
                         .load(model.getImageLink())
                         .networkPolicy(NetworkPolicy.OFFLINE)
                         .into(holder.wallpaper, new Callback() {
@@ -69,8 +69,8 @@ public class TrendingFragment extends Fragment {
                             }
 
                             @Override
-                            public void onError() {
-                                Picasso.with(getActivity())
+                            public void onError(Exception e) {
+                                Picasso.get()
                                         .load(model.getImageLink())
                                         .error(R.drawable.ic_terrain_black_24dp)
                                         .into(holder.wallpaper, new Callback() {
@@ -80,8 +80,8 @@ public class TrendingFragment extends Fragment {
                                             }
 
                                             @Override
-                                            public void onError() {
-                                                Log.e("NDT DEV", "Cound't not featch image");
+                                            public void onError(Exception exception) {
+                                                Log.e("NDT DEV", "Could not fetch image");
 
                                             }
                                         });

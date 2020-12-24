@@ -4,27 +4,27 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".activity.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launch"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launch"
         android:supportsRtl="true"
-        android:name=".activity.App"
         android:theme="@style/AppTheme">
 
 
-        <meta-data
+        <meta-data xmlns:tools="http://schemas.android.com/tools"
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id">
-        </meta-data>
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
 
         <provider
-            android:authorities="com.facebook.app.FacebookContentProvider2370008553327318"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+            android:authorities="com.facebook.app.FacebookContentProvider2370008553327318"
+            android:exported="true" />
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>

@@ -51,13 +51,13 @@ public class CategoryFragment extends Fragment {
         categoryBackground = database.getReference(Common.STR_CATEGORY_BACKGROUND);
 
         options = new FirebaseRecyclerOptions.Builder<CategoryItem>()
-                .setQuery(categoryBackground, CategoryItem.class) // selec all
+                .setQuery(categoryBackground, CategoryItem.class) // select all
                 .build();
 
         adapter = new FirebaseRecyclerAdapter<CategoryItem, CategoryViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final CategoryViewHolder holder, int position, @NonNull final CategoryItem model) {
-                Picasso.with(getActivity())
+                Picasso.get()
                         .load(model.getImageLink())
                         .networkPolicy(NetworkPolicy.OFFLINE)
                         .into(holder.background_image, new Callback() {
@@ -68,9 +68,9 @@ public class CategoryFragment extends Fragment {
                             }
 
                             @Override
-                            public void onError() {
+                            public void onError(Exception e) {
                                 // try again online if cache failed
-                                Picasso.with(getActivity())
+                                Picasso.get()
                                         .load(model.getImageLink())
                                         .error(R.drawable.ic_terrain_black_24dp)
                                         .into(holder.background_image, new Callback() {
@@ -80,8 +80,8 @@ public class CategoryFragment extends Fragment {
                                             }
 
                                             @Override
-                                            public void onError() {
-                                                Log.e("ERROR_NDT", "Cound fetch image");
+                                            public void onError(Exception exception) {
+                                                Log.e("ERROR_NDT", "Could fetch image");
 
                                             }
                                         });

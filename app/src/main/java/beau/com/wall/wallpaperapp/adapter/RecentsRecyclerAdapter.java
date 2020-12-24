@@ -23,9 +23,9 @@ import beau.com.wall.wallpaperapp.R;
 import beau.com.wall.wallpaperapp.ViewHolder.ListWallpaperViewHolder;
 import beau.com.wall.wallpaperapp.activity.ViewWallpaper;
 
-public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperViewHolder>{
+public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Recents> recents;
 
     public RecentsRecyclerAdapter(Context context, List<Recents> recents) {
@@ -37,14 +37,14 @@ public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperVi
     public ListWallpaperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_wallpaper, parent, false);
-        int height = parent.getMeasuredHeight()/2;
+        int height = parent.getMeasuredHeight() / 2;
         itemView.setMinimumHeight(height);
         return new ListWallpaperViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final ListWallpaperViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        Picasso.with(context)
+        Picasso.get()
                 .load(recents.get(position).getImageLink())
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(holder.wallpaper, new Callback() {
@@ -54,8 +54,8 @@ public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperVi
                     }
 
                     @Override
-                    public void onError() {
-                        Picasso.with(context)
+                    public void onError(Exception exception) {
+                        Picasso.get()
                                 .load(recents.get(position).getImageLink())
                                 .error(R.drawable.ic_terrain_black_24dp)
 //                                        .networkPolicy(NetworkPolicy.OFFLINE)
@@ -66,8 +66,8 @@ public class RecentsRecyclerAdapter extends RecyclerView.Adapter<ListWallpaperVi
                                     }
 
                                     @Override
-                                    public void onError() {
-                                        Log.e("NDT DEV", "Cound't not featch image");
+                                    public void onError(Exception e) {
+                                        Log.e("NDT DEV", "Could not fetch image");
 
                                     }
                                 });

@@ -90,10 +90,10 @@ public class ViewWallpaper extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     AlertDialog alertDialog = new SpotsDialog(ViewWallpaper.this);
                     alertDialog.show();
-                    alertDialog.setMessage("Please watting....");
+                    alertDialog.setMessage("Please waiting....");
 
                     String fileName = UUID.randomUUID().toString() + ".png";
-                    Picasso.with(getBaseContext())
+                    Picasso.get()
                             .load(Common.select_background.getImageLink())
                             .into(new SaveImageHelper(getBaseContext(),
                                     alertDialog,
@@ -102,7 +102,7 @@ public class ViewWallpaper extends AppCompatActivity {
                                     "NDT Wallpaper Image"));
 
                 } else {
-                    Toast.makeText(this, "You need accpept this permission to dowload image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "You need accept this permission to download image", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -123,7 +123,7 @@ public class ViewWallpaper extends AppCompatActivity {
         }
 
         @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
         }
 
@@ -149,7 +149,7 @@ public class ViewWallpaper extends AppCompatActivity {
         }
 
         @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
         }
 
@@ -188,7 +188,7 @@ public class ViewWallpaper extends AppCompatActivity {
         collapsingToolbarLayout.setTitle(Common.CATEGORY_SELECTED);
 
         imageView = findViewById(R.id.imgThumb);
-        Picasso.with(this)
+        Picasso.get()
                 .load(Common.select_background.getImageLink())
                 .into(imageView);
 
@@ -218,20 +218,20 @@ public class ViewWallpaper extends AppCompatActivity {
                 });
 
                 // we will fetch photo from link and convert to bitmap
-                Picasso.with(getBaseContext())
+                Picasso.get()
                         .load(Common.select_background.getImageLink())
                         .into(facebookConvertBitmap);
             }
         });
 
         // add to recent
-        addToRecents();
+        addToRecent();
 
         fab_wallpaper = findViewById(R.id.fab_wallpaper);
         fab_wallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Picasso.with(getBaseContext())
+                Picasso.get()
                         .load(Common.select_background.getImageLink())
                         .into(target);
             }
@@ -252,7 +252,7 @@ public class ViewWallpaper extends AppCompatActivity {
                     alertDialog.setMessage("Please waiting....");
 
                     String fileName = UUID.randomUUID().toString() + ".png";
-                    Picasso.with(getBaseContext())
+                    Picasso.get()
                             .load(Common.select_background.getImageLink())
                             .into(new SaveImageHelper(getBaseContext(),
                                     alertDialog,
@@ -329,7 +329,7 @@ public class ViewWallpaper extends AppCompatActivity {
                 });
     }
 
-    private void addToRecents() {
+    private void addToRecent() {
         Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
             // Ctr I
             @Override
@@ -365,7 +365,7 @@ public class ViewWallpaper extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Picasso.with(this).cancelRequest(target);
+        Picasso.get().cancelRequest(target);
         compositeDisposable.clear();
         super.onDestroy();
     }
